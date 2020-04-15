@@ -4,29 +4,44 @@ const isAuthorized = request => {
 }
 
 const requiresAuthorization = request => {
-  return request.url.includes('protected.json')
+  return request.url.includes('protected')
+}
+
+const isDataRoute = request => /.json$/g.test(request.url)
+
+const redirectToLogin = response => {
+  response.writeHead(302, { Location: '/' })
+}
+
+const setUnauthorized = response => {
+  response.statusCode = 401
 }
 
 export default (request, response, next) => {
+  console.log('')
+  console.log(request.url)
+  const loggedIn = isAuthorized(request)
+  request.auth = { loggedIn }
+
   if (!requiresAuthorization(request)) {
-    request.auth = {
-      loggedIn: false
-    }
+    console.log('doesnt require auth')
     next()
     return
   }
 
-  if (!isAuthorized(request)) {
-    request.auth = {
-      loggedIn: false
-    }
-    response.statusCode = 401
-    response.end()
+  if (isAuthorized(request)) {
+    console.log('authorized')
+    next()
     return
   }
 
-  request.auth = {
-    loggedIn: false
+  // Route requires auth, but user isn't authorized.
+  console.log('not authorized')
+  if (isDataRoute(request)) {
+    setUnauthorized(response)
+  } else {
+    redirectToLogin(response)
   }
-  next()
+
+  response.end()
 }

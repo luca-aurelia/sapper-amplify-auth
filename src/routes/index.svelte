@@ -1,5 +1,9 @@
 <script>
-  import { goto } from "@sapper/app"
+  import { goto, stores } from "@sapper/app"
+  const { session } = stores()
+  import Login from "../components/Login.svelte"
+  import Logout from "../components/Logout.svelte"
+
   let username
   let password
 
@@ -20,13 +24,8 @@
   <title>Sapper auth example</title>
 </svelte:head>
 
-<h1>Sign In</h1>
-<div>
-  Username:
-  <input bind:value={username} />
-</div>
-<div>
-  Password:
-  <input bind:value={password} />
-</div>
-<button on:click={logIn}>Log In</button>
+{#if $session.loggedIn}
+  <Logout />
+{:else}
+  <Login />
+{/if}

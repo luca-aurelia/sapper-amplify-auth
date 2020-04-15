@@ -13,7 +13,7 @@ const sapperMiddleware = {
   }
 }
 
-polka() // You can also use Express
+polka()
   .use(
     auth,
     compression({ threshold: 0 }),

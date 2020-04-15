@@ -11,7 +11,12 @@ const parseCredentials = async request => {
 const isAuthorized = (username, password) =>
   username === 'username' && password === 'password'
 
+const authCookie = 'accessToken=ministryOfSillyWalks; HttpOnly'
+const expirationDate = new Date(1).toUTCString()
+const expireAuthCookie = authCookie + '; Expires=' + expirationDate
+
 export async function post (request, response) {
+  console.log('Logging in.')
   const { username, password } = await parseCredentials(request)
 
   if (!username || !password) {
@@ -22,10 +27,8 @@ export async function post (request, response) {
   }
 
   if (isAuthorized(username, password)) {
-    response.setHeader(
-      'Set-Cookie',
-      'accessToken=ministryOfSillyWalks; HttpOnly'
-    )
+    console.log('authorization succeeded')
+    response.setHeader('Set-Cookie', authCookie)
 
     response.statusCode = 204
     response.end()
@@ -36,4 +39,10 @@ export async function post (request, response) {
   response.statusMessage = 'Not authorized'
   response.setHeader('Content-Type', 'application/json')
   response.end(JSON.stringify({ message: 'Wrong username or password.' }))
+}
+
+export async function del (request, response) {
+  response.setHeader('Set-Cookie', expireAuthCookie)
+  response.statusCode = 204
+  response.end()
 }
