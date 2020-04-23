@@ -1,6 +1,8 @@
 import { Auth } from '../Amplify'
 import cookies from 'js-cookie'
 
+let redirectAfterAuth
+
 const authCookie = {
   async refresh () {
     const { accessToken, idToken, refreshToken } = await Auth.currentSession()

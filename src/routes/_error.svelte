@@ -6,8 +6,8 @@
 
   onMount(async () => {
     if (status === 401) {
-      // await goto("/")
-      // alert("You need to log in before going there.")
+      await goto("/")
+      alert("You need to log in before going there.")
     }
   })
 </script>

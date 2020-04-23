@@ -13,9 +13,6 @@ const cognitoExpress = new CognitoExpress({
 pifyMethod(cognitoExpress, 'validate')
 
 const getAccessToken = request => {
-  console.log('Parsing authorization header')
-  console.log(request.headers.cookie)
-
   if (!request.headers.cookie) return null
 
   const { accessToken } = cookie.parse(request.headers.cookie)
@@ -72,12 +69,12 @@ export default async (request, response, next) => {
 
   // Route requires auth, but user isn't authorized.
   console.log('not authorized')
-  if (isDataRoute(request)) {
-    setUnauthorized(response)
-  }
-  /* else {
-    redirectToLogin(response)
-  } */
+  // if (isDataRoute(request)) {
+  setUnauthorized(response)
+  // }
+  // else {
+  // redirectToLogin(response)
+  // }
 
   response.end()
 }

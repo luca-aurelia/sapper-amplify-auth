@@ -9,5 +9,6 @@
   }
 </script>
 
-You're logged in.
+<h1>Sign out 👋</h1>
+<div>You're signed in 🍃</div>
 <button on:click={signOutOnClick}>Sign Out</button>

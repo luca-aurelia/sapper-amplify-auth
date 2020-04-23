@@ -1,16 +1,19 @@
 <script>
   import { signIn } from "../helpers/auth"
   import { goto, stores } from "@sapper/app"
+  import queryString from "query-string"
   const { session } = stores()
 
   let username
   let password
   let error
 
+  const { redirect = "/protected" } = queryString.parse(location.search)
+
   const signInAndRedirect = async () => {
     try {
       await signIn(username, password, session)
-      goto("/protected")
+      goto(redirect)
     } catch (err) {
       error = err
       throw err
@@ -25,7 +28,7 @@
   }
 </style>
 
-<h1>Sign In</h1>
+<h1>Sign in 🗝</h1>
 <div>
   Username:
   <input bind:value={username} />
@@ -34,7 +37,7 @@
   Password:
   <input bind:value={password} />
 </div>
-<div class="error">
-  {#if error}{error.message}{/if}
-</div>
-<button on:click={signInAndRedirect}>Sign In</button>
+{#if error}
+  <div class="error">{error.message}</div>
+{/if}
+<button on:click={signInAndRedirect}>Sign in</button>

@@ -20,6 +20,7 @@
     "js-cookie": "^2.2.1",
     "pify": "^5.0.0",
     "polka": "next",
+    "query-string": "^6.12.1",
     "sirv": "^0.4.0"
   },
   "devDependencies": {

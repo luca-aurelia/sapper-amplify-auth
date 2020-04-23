@@ -18,6 +18,10 @@
       const data = await response.json()
       return { data }
     } catch (error) {
+      if (error.statusCode === 401) {
+        return this.redirect(302, "/log-in?redirect=" + page.path)
+      }
+
       this.error(error.statusCode, error.message)
       console.log(error)
     }
