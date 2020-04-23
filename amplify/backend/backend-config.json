@@ -1,0 +1,10 @@
+{
+	"auth": {
+		"sapperamplifyauth220b31c8": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	}
+}

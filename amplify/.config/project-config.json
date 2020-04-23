@@ -1,0 +1,17 @@
+{
+    "projectName": "sapper-amplify-auth",
+    "version": "3.0",
+    "frontend": "javascript",
+    "javascript": {
+        "framework": "none",
+        "config": {
+            "SourceDir": "src",
+            "DistributionDir": "__node__/build",
+            "BuildCommand": "yarn build",
+            "StartCommand": "npm run start"
+        }
+    },
+    "providers": [
+        "awscloudformation"
+    ]
+}

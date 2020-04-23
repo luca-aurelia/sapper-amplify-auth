@@ -1,17 +1,20 @@
 <script context="module">
-  import authenticate from "../helpers/authenticate.js"
-
   export async function preload(page, session) {
-    if (!session.loggedIn) {
-      this.error(401, "Not authorized")
-      return
-    }
+    console.log("Preloading protected.svelte")
 
     try {
+      console.log("fetching protected data")
       const response = await this.fetch("protected.json", {
         method: "GET",
         credentials: "include"
       })
+
+      if (response.status >= 400) {
+        const error = new Error("Error preloading.")
+        error.statusCode = response.status
+        throw error
+      }
+
       const data = await response.json()
       return { data }
     } catch (error) {
@@ -19,10 +22,6 @@
       console.log(error)
     }
   }
-
-  // export function preload(page, session) {
-  //   return authenticate(this, unauthenticatedPreload, page, session)
-  // }
 </script>
 
 <script>
