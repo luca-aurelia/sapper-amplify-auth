@@ -1,5 +1,5 @@
 import { Auth } from '../Amplify'
-import { stores } from '@sapper/app'
+import cookies from 'js-cookie'
 
 const authCookie = {
   async refresh () {
@@ -7,10 +7,10 @@ const authCookie = {
     this.set(accessToken.jwtToken)
   },
   set (accessToken) {
-    document.cookie = `accessToken=${accessToken}`
+    cookies.set('accessToken', accessToken)
   },
-  async delete () {
-    document.cookie = ''
+  delete () {
+    cookies.remove('accessToken')
   }
 }
 
@@ -32,6 +32,6 @@ export const signIn = async (username, password, session) => {
 
 export const signOut = async session => {
   await Auth.signOut()
-  await authCookie.delete()
+  authCookie.delete()
   setAuthorizedOnSession(session, false)
 }
