@@ -2,31 +2,26 @@
 
 The default [Sapper](https://github.com/sveltejs/sapper) template, available for Rollup and webpack.
 
-_Logging In_
+_Signing In_
 
-1. The user visits the login page.
+1. The user visits the sign in page.
 2. The user enters their credentials.
 3. The Amplify library makes a request to Cognito, which returns an access token, ID token, and refresh token.
 4. The client sets the access token as a cookie.
+5. The client sets `authorized: true` in the Sapper session.
 
 _Rendering a view_
 
-5. The user visits the /protected route.
-6. The access token is a cookie, so it's automatically included with the request.
-7. The server renders the /protected.svelte route and calls its preload function.
-8. The preload function makes a fetch request to /protected.json to retrieve the sensitive data. When fetching, it uses the `credentials: include` option so cookies are passed along with the fetch request.
+6. The user visits the /protected route.
+7. The access token is a cookie, so it's automatically included with the request.
+8. The server renders the /protected.svelte route and calls its preload function.
+9. The preload function makes a fetch request to /protected.json to retrieve the sensitive data. When fetching, it uses the `credentials: include` option so cookies are passed along with the fetch request.
 
 _Retrieving sensitive data_
 
-9. The server checks whether the auth cookie is valid.
-10. If it's invalid, the server responds with a 401 status code and doesn't send the requested data.
-11. If it's valid, the server lets the request continue through the rest of the app for processing.
-
-_Questions_
-
-What happens when Amplify uses a refresh token?
-
-- Maybe we use Amplify and server-side sessions
+10. The server checks whether the auth cookie is valid.
+11. If it's invalid, the server responds with a 401 status code and doesn't send the requested data.
+12. If it's valid, the server lets the request continue through the rest of the app for processing.
 
 ## Getting started
 

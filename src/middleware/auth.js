@@ -33,23 +33,11 @@ const requiresAuthorization = request => {
   return request.url.includes('protected.json')
 }
 
-const isDataRoute = request => /.json$/g.test(request.url)
-
-const redirectToLogin = response => {
-  response.writeHead(302, { Location: '/' })
-}
-
 const setUnauthorized = response => {
   response.statusCode = 401
 }
 
 export default async (request, response, next) => {
-  // const credentialStorage = new RequestStorage(request)
-  // console.log('Derp? ', Auth.derp)
-  // Auth.configure({
-  //   storage: credentialStorage
-  // })
-
   console.log('')
   console.log(request.url)
   const authorized = await isAuthorized(request)
@@ -69,12 +57,7 @@ export default async (request, response, next) => {
 
   // Route requires auth, but user isn't authorized.
   console.log('not authorized')
-  // if (isDataRoute(request)) {
   setUnauthorized(response)
-  // }
-  // else {
-  // redirectToLogin(response)
-  // }
 
   response.end()
 }
